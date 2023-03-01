@@ -10,7 +10,7 @@ const _enemies = {
 			dexterity = 6,
 			skill_names = ["Drunk Attack"],
 			max_health = 50,
-			defence = 6,
+			defense = 6,
 		},
 	},
 }

@@ -11,6 +11,9 @@ const _levels = {
 		],
 	},
 	level2 = {
+		new_skills = [
+			"Love Attack",
+		],
 		enemies = [
 			"Drunk Man",
 			"Drunk Man",

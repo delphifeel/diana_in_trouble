@@ -14,15 +14,16 @@ const _skills = {
 		cooldown = 4.0,
 	},
 	"Love Attack": {
-		accuracy = [Insight, Willpower, 4],
-		dmg = [HighRoll, 20],
-		cooldown = 8.0,
+		accuracy = [Insight, Willpower, 1],
+		dmg = [HighRoll, -3],
+		cooldown = 4.0,
+		all = true,
 	},
 	
 	# Enemy skills
 	"Drunk Attack": {
 		accuracy = [Might, Might, -4],
-		dmg = [HighRoll],
+		dmg = [HighRoll, -7],
 		cooldown = 4.0,
 	},
 }

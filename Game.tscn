@@ -73,8 +73,6 @@ margin_bottom = 233.0
 size_flags_stretch_ratio = 0.0
 columns = 4
 script = ExtResource( 8 )
-_player_node_path = NodePath("../Player")
-_action_label_path = NodePath("../ActionLabel")
 
 [node name="ActionLabel" type="Label" parent="."]
 margin_left = 125.0

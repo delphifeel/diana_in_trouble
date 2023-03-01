@@ -1,24 +1,30 @@
 extends Node
 
+var EnemyScene = load("res://Enemy.tscn")
+onready var StoryText = get_node("/root/Game/StoryText")
+onready var PlayerSkillsMenu = get_node("/root/Game/PlayerSkillsMenu")
+
+signal level_changed
+
 const _SPAWN_POINTS := [
 	Vector2(335.0, 101.0),
 	Vector2(382.0, 38.0),
 	Vector2(382.0, 151.0),
 ]
 
-var EnemyScene = load("res://Enemy.tscn")
-onready var StoryText = get_node("/root/Game/StoryText")
-onready var PlayerSkillsMenu = get_node("/root/Game/PlayerSkillsMenu")
-
 var _active_level_number := 1
 var _all_enemies = []
 var _is_story_phase := true
 
+func get_enemy_by_index(index):
+	return _all_enemies[index]
+
 func switch_to_game_phase():
 	_is_story_phase = false
 	get_tree().paused = false
-	PlayerSkillsMenu.visible = true
 	StoryText.visible = false
+	PlayerSkillsMenu.visible = true
+	InputState.change_selection_state(InputState.SelectionState.Skill)
 	
 func _switch_to_story_phase():
 	_is_story_phase = true
@@ -31,6 +37,7 @@ func next_level():
 	_active_level_number += 1
 	_spawn_enemies()
 	_switch_to_story_phase()
+	emit_signal("level_changed")
 
 func get_level_number():
 	return _active_level_number
@@ -49,8 +56,9 @@ func _spawn_enemies():
 	
 func _spawn_enemy(enemy_id):
 	var enemy = EnemyScene.instance()
-	enemy.enemy_id = enemy_id
 	var index = _all_enemies.size()
+	enemy.enemy_id = enemy_id
+	enemy.enemy_index = index
 	add_child(enemy)
 	enemy.position = _SPAWN_POINTS[index]
 	_all_enemies.push_back(enemy)
@@ -63,7 +71,6 @@ func _destroy_enemies():
 func _process(_delta):
 	var all_dead := true
 	for enemy in _all_enemies:
-
 		if not enemy.character().is_dead():
 			all_dead = false
 			break

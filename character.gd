@@ -13,7 +13,7 @@ var _HealthBar = null
 	# insight
 	# willpower
 	# dexterity
-	# defence
+	# defense
 	# max_health
 	# skill_names
 func _init(id, ActionBar, HealthBar, stats):
@@ -38,7 +38,7 @@ func get_stats():
 func can_attack():
 	return _cooldown_left <= 0.0
 
-func attack(target, skill_name):
+func attack(targets, skill_name):
 	assert(can_attack())
 	var skill = AllSkills.get(skill_name)
 	_go_to_cooldown(skill.cooldown * Settings.speed)
@@ -57,29 +57,29 @@ func attack(target, skill_name):
 			acc_value += roll
 	if acc_value < 0:
 		acc_value = 0
-	
-	var target_character = target.character()
-	var target_defence = target_character.get_stats().defence
-	print("%s attacks %s (%s vs %s)" % [get_id(), target_character.get_id(), acc_value, target_defence])
-	if acc_value < target_defence:
-		print("Miss")
-		return
-		
-	# dmg
-	var dmg_value := 0
-	for modifier in skill.dmg:
-		if modifier is int:
-			dmg_value += modifier
-		elif modifier == AllSkills.HighRoll:
-			dmg_value += highroll
-		else:
-			var roll = Random.new() % _stats[modifier] + 1
-			dmg_value += roll
+
+	for target_character in targets:	
+		var target_defense = target_character.get_stats().defense
+		print("%s attacks %s (%s vs %s)" % [get_id(), target_character.get_id(), acc_value, target_defense])
+		if acc_value < target_defense:
+			print("Miss")
+			return
 			
-	if dmg_value < 0:
-		dmg_value = 0
-	print("%s takes %s dmg" % [target_character.get_id(), dmg_value])
-	target_character.take_dmg(dmg_value)
+		# dmg
+		var dmg_value := 0
+		for modifier in skill.dmg:
+			if modifier is int:
+				dmg_value += modifier
+			elif modifier == AllSkills.HighRoll:
+				dmg_value += highroll
+			else:
+				var roll = Random.new() % _stats[modifier] + 1
+				dmg_value += roll
+				
+		if dmg_value < 0:
+			dmg_value = 0
+		print("%s takes %s dmg" % [target_character.get_id(), dmg_value])
+		target_character.take_dmg(dmg_value)
 	
 func take_dmg(amount):
 	_health -= amount
