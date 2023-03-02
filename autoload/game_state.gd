@@ -25,28 +25,28 @@ func switch_to_game_phase():
 	StoryText.visible = false
 	PlayerSkillsMenu.visible = true
 	InputState.change_selection_state(InputState.SelectionState.Skill)
-	
-func _switch_to_story_phase():
-	_is_story_phase = true
-	get_tree().paused = true
-	PlayerSkillsMenu.visible = false
-	StoryText.init()
-	StoryText.visible = true
 
-func next_level():
+func level_number():
+	return _active_level_number
+
+func level():
+	return Levels.get("level" + String(_active_level_number))
+	
+func _next_level():
 	_active_level_number += 1
 	_spawn_enemies()
 	_switch_to_story_phase()
 	emit_signal("level_changed")
 
-func get_level_number():
-	return _active_level_number
+func _switch_to_story_phase():
+	_is_story_phase = true
+	get_tree().paused = true
+	PlayerSkillsMenu.visible = false
+	StoryText.init()
+	StoryText.visible = true	
 
-func get_level():
-	return Levels.get("level" + String(_active_level_number))
-	
 func _spawn_enemies():	
-	var level = get_level()
+	var level = level()
 	var level_enemies_count = level.enemies.size()
 	_spawn_enemy(level.enemies[0])
 	if level_enemies_count > 1:
@@ -77,7 +77,7 @@ func _process(_delta):
 			
 	if all_dead:
 		_destroy_enemies()
-		next_level()
+		_next_level()
 
 func _ready():
 	_spawn_enemies()

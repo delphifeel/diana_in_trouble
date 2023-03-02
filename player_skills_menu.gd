@@ -10,7 +10,7 @@ func add_skill(skill_name):
 	add_child(skill_button)
 
 func _ready():	
-	for skill_name in Player.character().get_stats().skill_names:
+	for skill_name in Player.character().stats().skill_names:
 		add_skill(skill_name)
 
 func _on_skill_pressed(button, skill_name):

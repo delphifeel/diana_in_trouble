@@ -10,10 +10,10 @@ func init():
 	_level = null
 
 func _process(delta):
-	var level_number = GameState.get_level_number()
+	var level_number = GameState.level_number()
 	if level_number != _prev_level_number:
 		_prev_level_number = level_number
-		_level = GameState.get_level()
+		_level = GameState.level()
 		self.text = _level.story_text[_index]
 		
 	if Input.is_action_just_pressed("ui_select"):

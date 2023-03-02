@@ -20,11 +20,11 @@ var _skill_to_use := ""
 func get_targets_indexes():
 	return _targets_indexes
 	
-func set_skill_to_use(skill_to_use: String, skill_button):
+func set_skill_to_use(skill_to_use, skill_button):
 	_skill_button = skill_button
 	_skill_to_use = skill_to_use
 	
-func get_skill_to_use():
+func skill_to_use():
 	return _skill_to_use
 		
 func change_selection_state(value):
@@ -45,8 +45,7 @@ func change_selection_state(value):
 			#ActionLabel.text = "Select target"
 			
 func _get_all_enemies_indexes():
-	return range(GameState.get_level().enemies.size())
-		
+	return range(GameState.level().enemies.size())
 			
 func _is_skill_targets_all(skill_name):
 	var skill = AllSkills.get(_skill_to_use)
@@ -63,7 +62,7 @@ func _select_prev_target_enemy():
 	var target_enemy_index = _targets_indexes[0]
 	var new_index
 	if target_enemy_index == 0:
-		new_index = GameState.get_level().enemies.size() - 1
+		new_index = GameState.level().enemies.size() - 1
 	else:
 		new_index = target_enemy_index - 1
 		
@@ -75,7 +74,7 @@ func _select_next_target_enemy():
 	
 	var target_enemy_index = _targets_indexes[0]
 	var new_index
-	if target_enemy_index == GameState.get_level().enemies.size() - 1:
+	if target_enemy_index == GameState.level().enemies.size() - 1:
 		new_index = 0
 	else:
 		new_index = target_enemy_index + 1

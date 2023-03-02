@@ -5,7 +5,6 @@ export(int) var enemy_index
 
 var _enemy_type = null
 var _prev_selecting_target := false
-var Character = load("res://character.gd")
 var _character = null
 
 onready var Player := get_node("/root/Game/Player")

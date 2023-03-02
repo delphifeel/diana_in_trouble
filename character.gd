@@ -1,4 +1,4 @@
-extends Reference
+class_name Character
 
 var _cooldown_left := 0.0
 var _stats = null
@@ -8,14 +8,6 @@ var _id := ""
 var _ActionBar = null
 var _HealthBar = null
 
-# stats struct
-	# might
-	# insight
-	# willpower
-	# dexterity
-	# defense
-	# max_health
-	# skill_names
 func _init(id, ActionBar, HealthBar, stats):
 	_id = id
 	_ActionBar = ActionBar
@@ -30,13 +22,13 @@ func _init(id, ActionBar, HealthBar, stats):
 	_ActionBar.value = 0
 	
 		
-func get_default_skill_name():
+func default_skill_name():
 	return _stats.skill_names[0]	
 	
-func get_id():
+func id():
 	return _id
 	
-func get_stats():
+func stats():
 	return _stats
 
 func can_attack():
@@ -55,7 +47,7 @@ func attack(targets, skill_name):
 			acc_value += modifier
 		else:
 			var roll = Random.new() % _stats[modifier] + 1
-			print("%s roll %s = %s" % [get_id(), modifier, roll])
+			print("%s roll %s = %s" % [id(), modifier, roll])
 			if roll > highroll:
 				highroll = roll
 			acc_value += roll
@@ -63,8 +55,8 @@ func attack(targets, skill_name):
 		acc_value = 0
 
 	for target_character in targets:	
-		var target_defense = target_character.get_stats().defense
-		print("%s attacks %s (%s vs %s)" % [get_id(), target_character.get_id(), acc_value, target_defense])
+		var target_defense = target_character.stats().defense
+		print("%s attacks %s (%s vs %s)" % [id(), target_character.id(), acc_value, target_defense])
 		if acc_value < target_defense:
 			print("Miss")
 			return
@@ -82,7 +74,7 @@ func attack(targets, skill_name):
 				
 		if dmg_value < 0:
 			dmg_value = 0
-		print("%s takes %s dmg" % [target_character.get_id(), dmg_value])
+		print("%s takes %s dmg" % [target_character.id(), dmg_value])
 		target_character.take_dmg(dmg_value)
 	
 func take_dmg(amount):
