@@ -35,7 +35,26 @@ func _ready():
 		_stats
 	)
 	GameState.connect("level_changed", self, "_on_level_changed")
+	
+func _get_active_skill():
+	var skill = InputState.get_skill_to_use()
+	if not skill:
+		skill = _character.get_default_skill_name()
+	return skill
+	
+func _process_active_skill():
+	$ActiveSkillLabel.text = _get_active_skill()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	_character.process(delta)
+	_process_active_skill()
+	
+	
+	var targets_indexes = InputState.get_targets_indexes()
+	if _character.can_attack() and targets_indexes.size() > 0:
+		var targets = []
+		for i in targets_indexes:
+			var enemy = GameState.get_enemy_by_index(i)
+			targets.append(enemy.character())
+		_character.attack(targets, _get_active_skill())

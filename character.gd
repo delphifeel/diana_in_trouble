@@ -29,6 +29,10 @@ func _init(id, ActionBar, HealthBar, stats):
 	_ActionBar.max_value = _cooldown_left
 	_ActionBar.value = 0
 	
+		
+func get_default_skill_name():
+	return _stats.skill_names[0]	
+	
 func get_id():
 	return _id
 	
@@ -41,7 +45,7 @@ func can_attack():
 func attack(targets, skill_name):
 	assert(can_attack())
 	var skill = AllSkills.get(skill_name)
-	_go_to_cooldown(skill.cooldown * Settings.speed)
+	_go_to_cooldown(skill.cooldown / Settings.speed)
 	
 	# accuracy
 	var highroll := 0
