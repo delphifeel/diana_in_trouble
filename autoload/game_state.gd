@@ -16,8 +16,8 @@ var _active_level_number := 1
 var _all_enemies = []
 var _is_story_phase := true
 
-func get_enemy_by_index(index):
-	return _all_enemies[index]
+func enemies():
+	return _all_enemies
 
 func switch_to_game_phase():
 	_is_story_phase = false

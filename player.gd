@@ -50,8 +50,11 @@ func _process(delta):
 	
 	var targets_indexes = InputState.get_targets_indexes()
 	if _character.can_attack() and targets_indexes.size() > 0:
+		var enemies = GameState.enemies()
 		var targets = []
 		for i in targets_indexes:
-			var enemy = GameState.get_enemy_by_index(i)
-			targets.append(enemy.character())
+			var enemy = enemies[i]
+			if not enemy.character().is_dead():
+				targets.append(enemy.character())
+				
 		_character.attack(targets, _get_active_skill())

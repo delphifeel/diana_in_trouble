@@ -78,6 +78,7 @@ func attack(targets, skill_name):
 		target_character.take_dmg(dmg_value)
 	
 func take_dmg(amount):
+	assert(not is_dead())
 	_health -= amount
 	_HealthBar.value = _health
 	
