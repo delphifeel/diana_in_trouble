@@ -11,9 +11,9 @@ const _levels = {
 		],
 	},
 	level2 = {
-		new_skills = [
-			"Love Attack",
-		],
+		new_skills = {
+			"Diana": ["Love Attack"],
+		},
 		enemies = [
 			"Drunk Man",
 			"Drunk Man",
@@ -22,6 +22,19 @@ const _levels = {
 		story_text = [
 			"That was hard !!!"
 		]
+	},
+	level3 = {
+		new_friends = [
+			"Liza",
+		],
+		enemies = [
+			"Drunk Man",
+			"Drunk Man",
+			"Drunk Man",
+		],
+		story_text = [
+			"Oh hi Liza. Wanna help me with those bastards ?",
+		],
 	},
 }
 

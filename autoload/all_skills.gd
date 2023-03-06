@@ -20,10 +20,17 @@ const _skills = {
 		all = true,
 	},
 	
+	# Liza skills
+	"Pistol Hit": {
+		accuracy = [Insight, Dexterity, 1],
+		dmg = [HighRoll, 5],
+		cooldown = 4.0,
+	},
+	
 	# Enemy skills
 	"Drunk Attack": {
 		accuracy = [Might, Might, -4],
-		dmg = [HighRoll, -7],
+		dmg = [HighRoll, -9],
 		cooldown = 4.0,
 	},
 }

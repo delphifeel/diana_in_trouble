@@ -34,7 +34,7 @@ func stats():
 func can_attack():
 	return _cooldown_left <= 0.0
 
-func attack(targets, skill_name):
+func attack(targets_characters, skill_name):
 	assert(can_attack())
 	var skill = AllSkills.get(skill_name)
 	_go_to_cooldown(skill.cooldown / Settings.speed)
@@ -54,7 +54,7 @@ func attack(targets, skill_name):
 	if acc_value < 0:
 		acc_value = 0
 
-	for target_character in targets:	
+	for target_character in targets_characters:	
 		var target_defense = target_character.stats().defense
 		print("%s attacks %s (%s vs %s)" % [id(), target_character.id(), acc_value, target_defense])
 		if acc_value < target_defense:

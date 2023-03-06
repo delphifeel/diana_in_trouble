@@ -1,20 +1,29 @@
 extends Node
 
 var EnemyScene = load("res://Enemy.tscn")
+var FriendScene = load("res://Friend.tscn")
 onready var StoryText = get_node("/root/Game/StoryText")
 onready var PlayerSkillsMenu = get_node("/root/Game/PlayerSkillsMenu")
 
 signal level_changed
 
-const _SPAWN_POINTS := [
+const _ENEMIES_SPAWNS := [
 	Vector2(335.0, 101.0),
 	Vector2(382.0, 38.0),
 	Vector2(382.0, 151.0),
 ]
+const _FRIENDS_SPAWNS := [
+	Vector2(35.0, 38.0),
+	Vector2(35.0, 151.0),
+]
 
 var _active_level_number := 1
 var _all_enemies = []
+var _all_friends = []
 var _is_story_phase := true
+
+func friends():
+	return _all_friends
 
 func enemies():
 	return _all_enemies
@@ -24,7 +33,7 @@ func switch_to_game_phase():
 	get_tree().paused = false
 	StoryText.visible = false
 	PlayerSkillsMenu.visible = true
-	InputState.change_selection_state(InputState.SelectionState.Skill)
+	InputState.switch_to_default_selection_state()
 
 func level_number():
 	return _active_level_number
@@ -34,6 +43,7 @@ func level():
 	
 func _next_level():
 	_active_level_number += 1
+	_spawn_new_friends_if_needed()
 	_spawn_enemies()
 	_switch_to_story_phase()
 	emit_signal("level_changed")
@@ -44,6 +54,23 @@ func _switch_to_story_phase():
 	PlayerSkillsMenu.visible = false
 	StoryText.init()
 	StoryText.visible = true	
+
+func _spawn_new_friends_if_needed():
+	var curr_level = level()
+	if not "new_friends" in curr_level:
+		return
+		
+	var new_friends = curr_level.new_friends
+	for friend_id in new_friends:
+		_spawn_friend(friend_id)
+		
+func _spawn_friend(friend_id):
+	var friend = FriendScene.instance()
+	var index = _all_friends.size()
+	friend.friend_id = friend_id
+	add_child(friend)
+	friend.position = _FRIENDS_SPAWNS[index]
+	_all_friends.push_back(friend)
 
 func _spawn_enemies():	
 	var level = level()
@@ -58,9 +85,8 @@ func _spawn_enemy(enemy_id):
 	var enemy = EnemyScene.instance()
 	var index = _all_enemies.size()
 	enemy.enemy_id = enemy_id
-	enemy.enemy_index = index
 	add_child(enemy)
-	enemy.position = _SPAWN_POINTS[index]
+	enemy.position = _ENEMIES_SPAWNS[index]
 	_all_enemies.push_back(enemy)
 	
 func _destroy_enemies():
@@ -80,6 +106,8 @@ func _process(_delta):
 		_next_level()
 
 func _ready():
+	_all_friends.append(get_node("/root/Game/Diana"))
+	
 	_spawn_enemies()
 	_switch_to_story_phase()
 	

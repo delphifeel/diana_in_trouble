@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://heath_theme.tres" type="Theme" id=1]
+[ext_resource path="res://action_theme.tres" type="Theme" id=2]
+[ext_resource path="res://assets/player.png" type="Texture" id=3]
+[ext_resource path="res://friend.gd" type="Script" id=4]
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.996078, 1, 0.25098, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.25098, 1, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+
+[node name="Friend" type="Sprite"]
+position = Vector2( 82, 101 )
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+friend_id = "Diana"
+
+[node name="Actionbar" type="ProgressBar" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -24.0
+margin_top = -17.0
+margin_right = 33.0
+margin_bottom = -7.0
+rect_scale = Vector2( 0.3, 0.3 )
+theme = ExtResource( 2 )
+custom_styles/fg = SubResource( 3 )
+custom_styles/bg = SubResource( 4 )
+percent_visible = false
+
+[node name="Healthbar" type="ProgressBar" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -24.0
+margin_top = -48.0
+margin_right = 33.0
+margin_bottom = -38.0
+rect_scale = Vector2( 0.3, 0.3 )
+theme = ExtResource( 1 )
+custom_styles/fg = SubResource( 1 )
+custom_styles/bg = SubResource( 2 )
+value = 100.0
+percent_visible = false
+
+[node name="ActiveSkillLabel" type="Label" parent="."]
+margin_left = -30.0
+margin_top = 20.0
+margin_right = 92.0
+margin_bottom = 34.0
+rect_scale = Vector2( 0.5, 0.5 )
+align = 1
+valign = 1
